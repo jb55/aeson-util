@@ -10,7 +10,7 @@ name:                aeson-util
 -- PVP summary:      +-+------- breaking API changes
 --                   | | +----- non-breaking API additions
 --                   | | | +--- code changes with no API change
-version:             0.1.0.0
+version:             0.1.0.1
 
 -- A short (one-line) description of the package.
 synopsis:            Aeson utilities
@@ -50,11 +50,16 @@ library
   exposed-modules:     Data.Aeson.Util
   
   -- Modules included in this library but not exported.
-  -- other-modules:       
+  other-modules:       Data.Aeson.Util.Test
   
   -- Other library packages from which modules are imported.
   build-depends: base >= 4.5
                , aeson >= 0.6
                , unordered-containers >= 0.2.2.1
                , text >= 0.11.2.3
+               , vector >= 0.9.1
+               , QuickCheck >= 2.5
+               , attoparsec >= 0.10.2.0
+               , hashable >= 1.1.2.3
+
   

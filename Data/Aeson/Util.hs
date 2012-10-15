@@ -1,4 +1,3 @@
-
 module Data.Aeson.Util (
   traverseWithKey
 , traverse
@@ -17,14 +16,14 @@ import qualified Data.HashMap.Lazy as Map
 -- The first argument to transforming function will be Nothing if it is not an
 -- Object's key
 traverseWithKey :: Applicative f => (Maybe Text -> Value -> f Value) -> Value -> f Value
-traverseWithKey fn = go
+traverseWithKey fn = go Nothing
   where
-    go (Array a)  = Array  <$> Traversable.traverse go a
-    go (Object o) = Object <$> Map.traverseWithKey (fn . Just) o
-    go v          = fn Nothing v
+    go _ (Array a)  = Array  <$> Traversable.traverse (go Nothing) a
+    go _ (Object o) = Object <$> Map.traverseWithKey (go . Just) o
+    go mt v         = fn mt v
 
 traverse :: Applicative f => (Value -> f Value) -> Value -> f Value
-traverse f = traverseWithKey $ const f
+traverse fn = traverseWithKey $ const fn
 
 map :: (Value -> Value) -> Value -> Value
 map fn = go
