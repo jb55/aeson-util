@@ -19,7 +19,7 @@ import qualified Data.HashMap.Lazy as Map
 traverseWithKey :: Applicative f => (Maybe Text -> Value -> f Value) -> Value -> f Value
 traverseWithKey fn = go
   where
-    go (Array a)  = Array <$> Traversable.traverse go a
+    go (Array a)  = Array  <$> Traversable.traverse go a
     go (Object o) = Object <$> Map.traverseWithKey (fn . Just) o
     go v          = fn Nothing v
 
@@ -30,7 +30,7 @@ map :: (Value -> Value) -> Value -> Value
 map fn = go
   where
     go (Array xs) = Array $ fmap go xs
-    go (Object x) = Object $ Map.map fn x
+    go (Object x) = Object $ Map.map go x
     go v          = fn v
 
 adjust :: (Value -> Value) -> Value -> Value
